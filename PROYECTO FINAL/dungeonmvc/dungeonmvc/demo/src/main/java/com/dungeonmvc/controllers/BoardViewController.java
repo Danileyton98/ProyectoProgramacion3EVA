@@ -1,9 +1,12 @@
 package com.dungeonmvc.controllers;
 
+import java.util.HashMap;
+
 import com.dungeonmvc.App;
 import com.dungeonmvc.GameManager;
 import com.dungeonmvc.interfaces.Observer;
 import com.dungeonmvc.models.Board;
+import com.dungeonmvc.models.Personaje;
 import com.dungeonmvc.utils.Vector2;
 import com.dungeonmvc.utils.Vector2Double;
 
@@ -25,6 +28,9 @@ public class BoardViewController implements Observer{
  
     private ImageView playerImg;
     private ImageView enemigoImg;
+    private ImageView personajeImg;
+    
+    HashMap<Personaje,ImageView> cargarImagen = new HashMap<>();
 
     @FXML
     private void initialize() {
@@ -59,35 +65,35 @@ public class BoardViewController implements Observer{
             }
         }
 
-    
-        enemigoImg = new ImageView();
-        enemigoImg.setFitWidth(cellSize);
-        enemigoImg.setFitHeight(cellSize);
-        enemigoImg.setImage(new Image(App.class.getResource("images/"+board.getEnemigo().getImage()+".png").toExternalForm(),cellSize,cellSize,true,false));
-        enemigoImg.setSmooth(false);
-        pane.getChildren().add(enemigoImg);
-
-        playerImg = new ImageView();
-        playerImg.setFitWidth(cellSize);
-        playerImg.setFitHeight(cellSize);
-        playerImg.setImage(new Image(App.class.getResource("images/"+board.getPlayer().getImage()+".png").toExternalForm(),cellSize,cellSize,true,false));
-        playerImg.setSmooth(false);
-        pane.getChildren().add(playerImg);
+        //Asociamos cada personaje con su imagen
+        for (Personaje personaje : GameManager.getInstance().getMonigotes()){
+            personajeImg = new ImageView();
+            personajeImg.setFitWidth(cellSize);
+            personajeImg.setFitHeight(cellSize);
+            personajeImg.setImage(new Image(App.class.getResource("images/"+personaje.getImage()+".png").toExternalForm(),cellSize,cellSize,true,false));
+            personajeImg.setSmooth(false);
+            pane.getChildren().add(personajeImg);
+            cargarImagen.put(personaje, personajeImg);
+        }
+        
         onChange();
     }
 
+    //Iteramos con un for each para que la imagen actualice su posicion correspondiente
     @Override
     public void onChange() {
-        Vector2Double newPos = matrixToInterface(board.getPlayer().getPosition());
-        System.out.println(newPos);
-        playerImg.setLayoutX(newPos.getX());
-        playerImg.setLayoutY(newPos.getY());
 
-        /*Vector2Double newPosEnemigo = matrixToInterface(board.getEnemigo().getPosition());
-        System.out.println(newPosEnemigo);
-        enemigoImg.setLayoutX(newPosEnemigo.getX());
-        enemigoImg.setLayoutY(newPosEnemigo.getY());*/
-        
+        for(Personaje personaje : GameManager.getInstance().getMonigotes()){
+            ImageView imageView = cargarImagen.get(personaje);
+
+            if(imageView != null){
+                Vector2Double newPos = matrixToInterface(personaje.getPosition());
+                System.out.println(newPos);
+                imageView.setLayoutX(newPos.getX());
+                imageView.setLayoutY(newPos.getY());
+            }
+            
+        }
     }
 
     @Override

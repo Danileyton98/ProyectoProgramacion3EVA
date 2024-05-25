@@ -1,11 +1,14 @@
 package com.dungeonmvc;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 
 import com.dungeonmvc.models.*;
 import com.dungeonmvc.models.Board.Direction;
 import com.dungeonmvc.utils.Vector2;
+
+import javafx.scene.image.ImageView;
 
 public class GameManager {
 
@@ -53,16 +56,21 @@ public class GameManager {
         
 
         ArrayList<Personaje> monigotes = new ArrayList<>();
+        
 
     
     private static GameManager instance;
     
-    Player player;
     Enemigo enemigo;
+    Player player;
     Board board;
     
     private GameManager(){
 
+    }
+
+    public ArrayList<Personaje> getMonigotes(){
+        return monigotes;
     }
 
     public static GameManager getInstance() {
@@ -72,13 +80,12 @@ public class GameManager {
         return instance;
     }
 
+    public Enemigo getEnemigo(){
+        return this.enemigo;
+    }
 
     public Player getPlayer() {
         return this.player;
-    }
-
-    public Enemigo getEnemigo(){
-        return this.enemigo;
     }
 
     public Board getBoard() {
@@ -99,10 +106,13 @@ public class GameManager {
         player.getInventory().addItem("item4");
         player.getInventory().addItem("item5");
 
-        /*enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Drako", 35, 12, 29, 34, "portrait" ,45);*/
+        
 
         monigotes.add(player);
         monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Drako", 35, 12, 29, 34, "portrait" ,45));
+        monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","bellatrix", 35, 12, 29, 34, "portrait" ,45));
+        /*monigotes.add(enemigo2);*/
+        
         /*mapas.add(mapa1);
         mapas.add(mapa2);
         num = random.nextInt(0,mapas.size());*/
