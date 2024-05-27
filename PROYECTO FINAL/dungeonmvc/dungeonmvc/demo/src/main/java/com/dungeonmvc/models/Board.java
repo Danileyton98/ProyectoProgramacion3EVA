@@ -114,14 +114,8 @@ public class Board{
     }
 
     
-    public void move(Player player, Direction direction){
-        Vector2 destino = getDestination(player.position, direction);
-        if (destino.getX() >= 0 && destino.getX() < size && destino.getY() >= 0 && destino.getY() < size){
-            if(board[destino.getX()][destino.getY()].getIsFloor()){
-                player.setPosition(destino);
-            }
-            
-        }
+    public void movePlayer(Direction direction){
+        player.move(direction);
         notifyObservers();
     }
 

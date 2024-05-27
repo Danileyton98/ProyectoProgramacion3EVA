@@ -79,7 +79,7 @@ public class BoardViewController implements Observer{
         onChange();
     }
 
-    //Iteramos con un for each para que la imagen actualice su posicion correspondiente
+    //Metodo de actualización de imagenes para cuando haya cambios en el juego
     @Override
     public void onChange() {
 

@@ -7,6 +7,7 @@ import com.dungeonmvc.utils.Vector2;
 
 public class Enemigo extends Personaje{
     
+    
     int percepcion;
     ArrayList<Observer> observers;
     
