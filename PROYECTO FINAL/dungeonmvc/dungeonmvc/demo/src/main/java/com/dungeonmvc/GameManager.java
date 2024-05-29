@@ -43,15 +43,24 @@ public class GameManager {
         return this.board;
     }
 
+    //Llamamos a los metodos move de jugador y move de enemigo recorriendo el arraylist de los personajes y haciendo un casteo de la variable
+    //personaje para convertir el objeto tipo personaje en enemigo
     public void newTurn(Direction direction){
-        if(player != null){
             player.move(direction);
-        }
+            for(Personaje personaje : monigotes){
+                if(personaje instanceof Enemigo){
+                    ((Enemigo)personaje).moveEnemigo(direction);
+                }
+                
+            }
     }
+    
         
 
     public void testGame(){
+
         
+
         boolean boardMatrix[][] = {
             {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
             {true, false, false, false, true, false, false, false, false, false, false, false, false, false, true},
@@ -77,21 +86,20 @@ public class GameManager {
             }
         }
 
-        player = new Player(new Vector2(0, 0),"player", "Paladin",34,65,45,47,"portrait", "item7", "item6",board);
+        player = new Player(new Vector2(0, 0),"player", "Paladin",34,65,45,47,"portrait", board, "item7", "item6");
         player.getInventory().addItem("item1");
         player.getInventory().addItem("item2");
         player.getInventory().addItem("item3");
         player.getInventory().addItem("item4");
         player.getInventory().addItem("item5");
 
-        
-
         monigotes.add(player);
-        monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Drako", 35, 12, 29, 34, "portrait" ,45));
-        monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","bellatrix", 35, 12, 29, 34, "portrait" ,45));
+        //monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Voldemort", 35, 12, 29, 34, "portrait", board,3));
+        monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","bellatrix", 35, 12, 29, 34, "portrait", board,3));
 
         for(int i = 0; i < monigotes.size(); i++){
             monigotes.get(i);
         }
+        
     }   
 }

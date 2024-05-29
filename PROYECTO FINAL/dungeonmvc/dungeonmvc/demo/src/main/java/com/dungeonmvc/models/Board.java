@@ -17,7 +17,6 @@ public class Board{
     private String floorImage;
     private String wallImage;
     private String cofre;
-    private Player player;  //PROVISIONAL, tener las referencias de todos los elementos interactivos
     private Enemigo enemigo;
 
     public Board(int size, String floorImage, String wallImage) {
@@ -25,8 +24,6 @@ public class Board{
         this.board = new Cell[size][size];
         this.floorImage = floorImage;
         this.wallImage = wallImage;
-
-        this.player = GameManager.getInstance().getPlayer();    //PROVISIONAL
         this.enemigo = GameManager.getInstance().getEnemigo();
         observers=new ArrayList<>();
 
@@ -92,14 +89,6 @@ public class Board{
         this.observers = observers;
     }
 
-    public Player getPlayer() {
-        return this.player;
-    }
-
-    public void setPlayer(Player player) {
-        this.player = player;
-    }
-
     public Enemigo getEnemigo(){
         return this.enemigo;
     }
@@ -115,7 +104,8 @@ public class Board{
 
     
     public void movePlayer(Direction direction){
-        player.move(direction);
+        GameManager.getInstance().getPlayer().move(direction);
+        enemigo.moveEnemigo(direction);
         notifyObservers();
     }
 

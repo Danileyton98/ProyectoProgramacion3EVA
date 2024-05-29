@@ -15,13 +15,14 @@ public class Personaje {
     int defensa;
     int velocidad;
     String portrait;
+    Board board;
     ArrayList<Observer> observers;
 
     public Personaje(){
 
     }
 
-    public Personaje(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait){
+    public Personaje(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board){
         this.position = position;
         this.name = name;
         this.image = image;
@@ -30,6 +31,7 @@ public class Personaje {
         this.defensa = defensa;
         this.velocidad = velocidad;
         this.portrait = portrait;
+        this.board = board;
         observers = new ArrayList<>();
     }
 
@@ -118,5 +120,13 @@ public class Personaje {
     public void setPortrait(String portrait) {
         this.portrait = portrait;
         notifyObservers();
+    }
+
+    public Board getBoard(){
+        return board;
+    }
+
+    public void setBoard(Board board){
+        this.board = board;
     }
 }

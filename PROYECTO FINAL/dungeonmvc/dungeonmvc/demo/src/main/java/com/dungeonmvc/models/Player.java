@@ -13,17 +13,15 @@ public class Player extends Personaje{
     String rightHand;
     Inventory inventory;
     boolean eliminado = false;
-    Board board;
 
 
 
-    public Player(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, String leftHand, String rightHand, Board board) {
-        super(position,image,name,puntosVida,fuerza,defensa,velocidad,portrait);
+    public Player(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board, String leftHand, String rightHand) {
+        super(position,image,name,puntosVida,fuerza,defensa,velocidad,portrait,board);
         observers = new ArrayList<>();
         this.leftHand = leftHand;
         this.rightHand = rightHand;
         this.inventory = new Inventory();
-        this.board = board;
     }
 
     public void suscribe(Observer observer){
@@ -84,8 +82,8 @@ public class Player extends Personaje{
             if(board.isFloor(destino)){
                 this.setPosition(destino);
             }
-            
         }
+        //Llamamos al metodo notifyObservers de la clase board
         board.notifyObservers();
     }
 

@@ -1,10 +1,12 @@
 package com.dungeonmvc.controllers;
 
 import java.io.IOException;
+import java.util.Random;
 
 import com.dungeonmvc.App;
 import com.dungeonmvc.GameManager;
 import com.dungeonmvc.models.Board.Direction;
+import com.dungeonmvc.utils.Vector2;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -62,13 +64,13 @@ public class MainViewController {
             if (event.getCode() == KeyCode.UP) {
                 System.out.println("Tecla arriba presionada");
                 direction = Direction.UP;
-            } else if (event.getCode() == KeyCode.DOWN) {
+            }if (event.getCode() == KeyCode.DOWN) {
                 System.out.println("Tecla abajo presionada");
                 direction = Direction.DOWN;
-            } else if (event.getCode() == KeyCode.LEFT) {
+            }if (event.getCode() == KeyCode.LEFT) {
                 System.out.println("Tecla izquierda presionada");
                 direction = Direction.LEFT;
-            } else if (event.getCode() == KeyCode.RIGHT) {
+            }if (event.getCode() == KeyCode.RIGHT) {
                 System.out.println("Tecla derecha presionada");
                 direction = Direction.RIGHT;
             }
