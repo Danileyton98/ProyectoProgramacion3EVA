@@ -107,7 +107,6 @@ public class Enemigo extends Personaje{
             if(board.isFloor(destino)){
                 this.setPosition(destino);
             }
-            
         }
         //Llamamos al metodo notifyObservers de la clase board
         board.notifyObservers();

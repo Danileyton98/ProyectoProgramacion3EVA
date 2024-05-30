@@ -1,6 +1,8 @@
 package com.dungeonmvc;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 
 import com.dungeonmvc.models.*;
 import com.dungeonmvc.models.Board.Direction;
@@ -94,8 +96,13 @@ public class GameManager {
         player.getInventory().addItem("item5");
 
         monigotes.add(player);
-        //monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Voldemort", 35, 12, 29, 34, "portrait", board,3));
+        monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Voldemort", 35, 12, 29, 34, "portrait", board,3));
         monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","bellatrix", 35, 12, 29, 34, "portrait", board,3));
+
+        //Con esta función nos ahorramos el algoritmo de ordenación, esto hara que se ordene mediante el atributo velocidad ya que
+        //en la clase personaje hemos implementado Comparable y sobrecargado el metodo compareTo que define la lógica de comparación
+        //basandose en el atributo
+        Collections.sort(monigotes);
 
         for(int i = 0; i < monigotes.size(); i++){
             monigotes.get(i);

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.dungeonmvc.interfaces.Observer;
 import com.dungeonmvc.utils.Vector2;
 
-public class Personaje {
+public class Personaje implements Comparable<Personaje>{
     
     Vector2 position;
     String name;
@@ -128,5 +128,11 @@ public class Personaje {
 
     public void setBoard(Board board){
         this.board = board;
+    }
+
+    //Sobrecargamos el metodo compareTo para comparar el atributo velocidad, que hara que la lista se ordene ascendentemente
+    @Override
+    public int compareTo(Personaje o) {
+        return Integer.compare(this.velocidad, o.velocidad);
     }
 }

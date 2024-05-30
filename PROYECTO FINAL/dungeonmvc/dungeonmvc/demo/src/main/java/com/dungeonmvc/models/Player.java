@@ -1,8 +1,6 @@
 package com.dungeonmvc.models;
 
 import java.util.ArrayList;
-
-import com.dungeonmvc.GameManager;
 import com.dungeonmvc.interfaces.Observer;
 import com.dungeonmvc.models.Board.Direction;
 import com.dungeonmvc.utils.Vector2;
