@@ -2,6 +2,7 @@ package com.dungeonmvc.models;
 
 import java.util.ArrayList;
 
+import com.dungeonmvc.interfaces.Interactuable;
 import com.dungeonmvc.interfaces.Observer;
 import com.dungeonmvc.utils.Vector2;
 

@@ -81,6 +81,10 @@ public class Board{
         return board[x][y].getIsFloor();
     }
 
+    public Cell getCell(Vector2 position){
+        return board[position.getX()][position.getY()];
+    }
+
     public ArrayList<Observer> getObservers() {
         return this.observers;
     }

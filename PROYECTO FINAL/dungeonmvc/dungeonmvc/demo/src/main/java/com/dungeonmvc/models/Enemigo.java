@@ -4,11 +4,12 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import com.dungeonmvc.GameManager;
+import com.dungeonmvc.interfaces.Interactuable;
 import com.dungeonmvc.interfaces.Observer;
 import com.dungeonmvc.models.Board.Direction;
 import com.dungeonmvc.utils.Vector2;
 
-public class Enemigo extends Personaje{
+public class Enemigo extends Personaje implements Interactuable{
     
     
     int percepcion;
@@ -101,14 +102,27 @@ public class Enemigo extends Personaje{
         }else{
             destino = randomEnemigo();
         }
-        // Comprobamos que el destino del jugador es mayor o igual a 0, esto evita que el personaje se salga del tablero
-        // En segundo lugar comprobamos si el destino del jugador es suelo, esto evitara que el jugador se posicione en una casilla de pared
-        if (destino.getX() >= 0 && destino.getX() < board.getSize() && destino.getY() >= 0 && destino.getY() < board.getSize()){
-            if(board.isFloor(destino)){
+        // Comprobamos que el destino del enemigo es mayor o igual a 0, esto evita que el enemigo se salga del tablero
+        // En segundo lugar comprobamos si el destino del enemigo es suelo, esto evitara que el enemigo se posicione en una casilla de pared
+        //y si esta ocupada por otro jugador, esto evitara que se junten dos monigotes en la misma casilla
+        if (destino.getX() >= 0 && destino.getX() < board.getSize()
+            && destino.getY() >= 0 && destino.getY() < board.getSize()){
+            if(board.isFloor(destino) && !board.getCell(destino).ocupada()){
+                //Liberamos la celda en la que estaba el enemigo poniendo como argumento null
+                board.getCell(this.position).setInteractuable(null);
+                //Se establece la nueva posicion
                 this.setPosition(destino);
+                //Se activa la casilla actual en la que el enemigo se encuentra para convertirla en interactuable
+                board.getCell(destino).setInteractuable(this);
             }
         }
         //Llamamos al metodo notifyObservers de la clase board
         board.notifyObservers();
+    }
+
+    @Override
+    public void interactuar(Interactuable o) {
+        // TODO Auto-generated method stub
+        
     }
 }
