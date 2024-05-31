@@ -88,7 +88,7 @@ public class GameManager {
             }
         }
 
-        player = new Player(new Vector2(0, 0),"player", "Paladin",34,65,45,47,"portrait", board, "item7", "item6");
+        player = new Player(new Vector2(0, 0),"player", "Paladin",60,65,45,47,"portrait", board, "item7", "item6", enemigo);
         player.getInventory().addItem("item1");
         player.getInventory().addItem("item2");
         player.getInventory().addItem("item3");
@@ -96,8 +96,8 @@ public class GameManager {
         player.getInventory().addItem("item5");
 
         monigotes.add(player);
-        monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Voldemort", 35, 12, 29, 34, "portrait", board,3));
-        monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","bellatrix", 35, 12, 29, 34, "portrait", board,3));
+        monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,3));
+        monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","Bellatrix", 35, 30, 29, 34, "portrait", board,3));
 
         //Con esta función nos ahorramos el algoritmo de ordenación, esto hara que se ordene mediante el atributo velocidad ya que
         //en la clase personaje hemos implementado Comparable y sobrecargado el metodo compareTo que define la lógica de comparación

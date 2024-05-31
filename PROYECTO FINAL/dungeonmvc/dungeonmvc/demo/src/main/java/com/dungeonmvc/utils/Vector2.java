@@ -31,10 +31,10 @@ public class Vector2 {
 
     @Override
     public String toString() {
-        return "{" +
+        return "" /*+
             " x='" + getX() + "'" +
             ", y='" + getY() + "'" +
-            "}";
+            "}"*/;
     }
 
 

@@ -1,12 +1,13 @@
 package com.dungeonmvc.models;
 
 import java.util.ArrayList;
-
-import com.dungeonmvc.GameManager;
+import java.util.Random;
 import com.dungeonmvc.interfaces.Interactuable;
 import com.dungeonmvc.interfaces.Observer;
 import com.dungeonmvc.models.Board.Direction;
+import com.dungeonmvc.utils.DiceRoll;
 import com.dungeonmvc.utils.Vector2;
+
 
 public class Player extends Personaje implements Interactuable{
     ArrayList<Observer> observers;
@@ -14,15 +15,18 @@ public class Player extends Personaje implements Interactuable{
     String rightHand;
     Inventory inventory;
     boolean eliminado = false;
+    DiceRoll ataque;
+    Enemigo enemigo;
 
 
 
-    public Player(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board, String leftHand, String rightHand) {
+    public Player(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board, String leftHand, String rightHand, Enemigo enemigo) {
         super(position,image,name,puntosVida,fuerza,defensa,velocidad,portrait,board);
         observers = new ArrayList<>();
         this.leftHand = leftHand;
         this.rightHand = rightHand;
         this.inventory = new Inventory();
+        this.enemigo = enemigo;
     }
 
     public void suscribe(Observer observer){
@@ -89,6 +93,8 @@ public class Player extends Personaje implements Interactuable{
                 this.setPosition(destino);
                 //Volvemos a convertir en interactuable la celda en la que se encuentra el jugador pasando this como argumento 
                 board.getCell(destino).setInteractuable(this);
+            }else{
+                enemigosAdyacentes();
             }
         }
         //Llamamos al metodo notifyObservers de la clase board
@@ -109,22 +115,20 @@ public class Player extends Personaje implements Interactuable{
             if(posAdyacente.getX() >= 0 && posAdyacente.getX() < board.getSize() &&
                posAdyacente.getY() >= 0 && posAdyacente.getY() < board.getSize()){
                 //Una vez verificado, guarda en celdaAdyacente la posicion, y seguidamente comprueba si la celda adyacente esta ocupada y si es 
-                //instancia de enemigo, si es asi, el siguiente metodo(interactuar) devolveria true
+                //instancia de enemigo, si es asi, el siguiente metodo(interactuar) iniciaria el ataque entre ambos
                 Cell celdaAdyacente = board.getCell(posAdyacente);
                 if(celdaAdyacente.ocupada() && celdaAdyacente.getInteractuable() instanceof Enemigo){
-                    interactuar(celdaAdyacente.getInteractuable());
+                    //Convierte el objeto interactuable en enemigo si el objeto de la celda adyacente es instancia de enemigo
+                    enemigo = (Enemigo) celdaAdyacente.getInteractuable();
+                    //Le pasamos this al metodo interactuar de la clase enemigo para saber quien esta iniciando la interaccion
+                    enemigo.interactuar(this);
                 }
             }
         }
-
-        
     }
 
     @Override
-    public void interactuar(Interactuable o) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'interactuar'");
+    public void interactuar(Interactuable interactuable) {
+        
     }
-
-    
 }

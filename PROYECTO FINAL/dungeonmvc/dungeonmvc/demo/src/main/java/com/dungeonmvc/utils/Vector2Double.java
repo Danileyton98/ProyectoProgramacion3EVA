@@ -26,10 +26,10 @@ public class Vector2Double {
 
     @Override
     public String toString() {
-        return "{" +
+        return "" /*+
             " x='" + getX() + "'" +
             ", y='" + getY() + "'" +
-            "}";
+            "}"*/;
     }
 
 }

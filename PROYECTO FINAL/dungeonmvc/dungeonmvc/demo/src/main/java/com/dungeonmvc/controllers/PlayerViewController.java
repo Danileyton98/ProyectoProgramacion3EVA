@@ -31,7 +31,6 @@ public class PlayerViewController implements Observer{
 
     Player player;
     Enemigo enemigo;
-    
 
     @FXML
     private void initialize() {
@@ -42,7 +41,7 @@ public class PlayerViewController implements Observer{
         portrait.setImage(new Image(App.class.getResource("images/"+player.getPortrait()+".png").toExternalForm(),portrait.getFitWidth(),portrait.getFitHeight(),true,false));
         leftWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getLeftHand()+".png").toExternalForm(),leftWeaponImg.getFitWidth(),leftWeaponImg.getFitHeight(),true,false));
         rightWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getRightHand()+".png").toExternalForm(),rightWeaponImg.getFitWidth(),rightWeaponImg.getFitHeight(),true,false));
-
+        
         enemigo = GameManager.getInstance().getEnemigo();
         enemigo.suscribe(this);
         portrait.setImage(new Image(App.class.getResource("images/"+enemigo.getPortrait()+".png").toExternalForm(),portrait.getFitWidth(),portrait.getFitHeight(),true,false));
@@ -52,8 +51,11 @@ public class PlayerViewController implements Observer{
 
     @Override
     public void onChange() {
+        Player player = GameManager.getInstance().getPlayer();
         nameTag.setText(player.getName());
         nameTag.setText(enemigo.getName());
+        //Actualiza el texto salud de la etiqueta en la interfaz grafica
+        currentHealthTag.setText("Salud: " + player.getPuntosVida());
         //leftWeapongImg.setImage(new Image(App.class.getResource("images/"+player.getLeftHand()+".png").toExternalForm()));
         //rightWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getRightHand()+".png").toExternalForm()));
     }

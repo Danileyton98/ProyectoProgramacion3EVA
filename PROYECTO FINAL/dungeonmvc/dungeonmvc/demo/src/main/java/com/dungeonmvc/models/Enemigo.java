@@ -14,6 +14,7 @@ public class Enemigo extends Personaje implements Interactuable{
     
     int percepcion;
     ArrayList<Observer> observers;
+    Player player;
     
     public Enemigo(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board, int percepcion){
         super(position,image,name,puntosVida,fuerza,defensa,velocidad,portrait,board);
@@ -121,8 +122,42 @@ public class Enemigo extends Personaje implements Interactuable{
     }
 
     @Override
-    public void interactuar(Interactuable o) {
-        // TODO Auto-generated method stub
+    public void interactuar(Interactuable interactuable) {
+
+        Player player = (Player) interactuable;
+        
+        Random random = new Random();
+        int dado;
+        int golpePlayer;
+        int danoEnemigo;
+        int golpeEnemigo;
+        int danoPlayer;
+        int saludPlayer = player.getPuntosVida();
+        int saludEnemigo = this.getPuntosVida();
+        boolean combate = false;
+        
+
+        while(combate != true){
+            dado = random.nextInt(20);
+            //Para calcular el golpe del player, tiramos un dado de 20 caras y segun el numero que salga hacemos el tanto porciento con
+            //la fuerza del player
+            golpePlayer = (player.getFuerza() * dado) / 100;
+            //Ahora para calcular el daño, hacemos el tanto porciento de golpePlayer con el atributo defensa del enemigo
+            danoEnemigo = (golpePlayer * getDefensa()) / 100;
+            this.setPuntosVida(saludEnemigo - danoEnemigo);
+            System.out.println("Salud enemigo: " + this.getPuntosVida());
+
+            dado = random.nextInt(20);
+            golpeEnemigo = (this.getFuerza() * dado) / 100;
+            danoPlayer = (golpeEnemigo * player.getDefensa()) / 100;
+            player.setPuntosVida(saludPlayer - danoPlayer);
+            System.out.println("Salud: " + player.getPuntosVida());
+
+            combate = true;
+
+            //Notificamos a Observers de la clase player para actualizar los puntos de vida
+            player.notifyObservers();
+        }
         
     }
 }
