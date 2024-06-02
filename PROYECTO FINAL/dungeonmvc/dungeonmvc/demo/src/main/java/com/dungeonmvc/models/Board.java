@@ -113,6 +113,10 @@ public class Board{
         notifyObservers();
     }
 
+    public void eliminarEnemigo(Enemigo enemigo){
+        GameManager.getInstance().getMonigotes().remove(enemigo);
+    }
+
     public Vector2 getDestination(Vector2 position, Direction direction){
         int destinoX = position.getX();
         int destinoY = position.getY();

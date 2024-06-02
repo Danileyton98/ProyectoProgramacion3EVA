@@ -1,6 +1,7 @@
 package com.dungeonmvc.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import com.dungeonmvc.interfaces.Interactuable;
 import com.dungeonmvc.interfaces.Observer;
@@ -11,8 +12,8 @@ import com.dungeonmvc.utils.Vector2;
 
 public class Player extends Personaje implements Interactuable{
     ArrayList<Observer> observers;
-    String leftHand;
-    String rightHand;
+    Arma leftHand;
+    Arma rightHand;
     Inventory inventory;
     boolean eliminado = false;
     DiceRoll ataque;
@@ -20,14 +21,18 @@ public class Player extends Personaje implements Interactuable{
 
 
 
-    public Player(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board, String leftHand, String rightHand, Enemigo enemigo) {
-        super(position,image,name,puntosVida,fuerza,defensa,velocidad,portrait,board);
+    public Player(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board, HashMap<Habilidades, Resistencias> resistencias, Arma leftHand, Arma rightHand, Enemigo enemigo) {
+        super(position,image,name,puntosVida,fuerza,defensa,velocidad,portrait,board,resistencias);
         observers = new ArrayList<>();
         this.leftHand = leftHand;
         this.rightHand = rightHand;
         this.inventory = new Inventory();
         this.enemigo = enemigo;
+        
+        
     }
+
+    
 
     public void suscribe(Observer observer){
         observers.add(observer);
@@ -41,20 +46,20 @@ public class Player extends Personaje implements Interactuable{
         observers.forEach(x -> x.onChange());
     }
 
-    public String getLeftHand() {
+    public Arma getLeftHand() {
         return this.leftHand;
     }
 
-    public void setLeftHand(String leftHand) {
+    public void setLeftHand(Arma leftHand) {
         this.leftHand = leftHand;
         notifyObservers();
     }
 
-    public String getRightHand() {
+    public Arma getRightHand() {
         return this.rightHand;
     }
 
-    public void setRightHand(String rightHand) {
+    public void setRightHand(Arma rightHand) {
         this.rightHand = rightHand;
         notifyObservers();
     }

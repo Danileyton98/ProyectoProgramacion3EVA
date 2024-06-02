@@ -1,6 +1,7 @@
 package com.dungeonmvc.models;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import com.dungeonmvc.interfaces.Interactuable;
 import com.dungeonmvc.interfaces.Observer;
@@ -18,12 +19,15 @@ public class Personaje implements Comparable<Personaje>{
     String portrait;
     Board board;
     ArrayList<Observer> observers;
+    HashMap<Habilidades,Resistencias> resistencias = new HashMap<>();
+
+    
 
     public Personaje(){
 
     }
 
-    public Personaje(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board){
+    public Personaje(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board, HashMap<Habilidades, Resistencias> resistencias){
         this.position = position;
         this.name = name;
         this.image = image;
@@ -33,7 +37,9 @@ public class Personaje implements Comparable<Personaje>{
         this.velocidad = velocidad;
         this.portrait = portrait;
         this.board = board;
+        this.resistencias = resistencias;
         observers = new ArrayList<>();
+        
     }
 
     public String getImage() {
@@ -129,6 +135,10 @@ public class Personaje implements Comparable<Personaje>{
 
     public void setBoard(Board board){
         this.board = board;
+    }
+
+    public HashMap<Habilidades,Resistencias> getResistencias(){
+        return resistencias;
     }
 
     //Sobrecargamos el metodo compareTo para comparar el atributo velocidad, que hara que la lista se ordene ascendentemente

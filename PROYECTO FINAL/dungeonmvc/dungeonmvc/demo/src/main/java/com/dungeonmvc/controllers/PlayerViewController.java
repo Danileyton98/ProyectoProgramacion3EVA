@@ -3,6 +3,7 @@ package com.dungeonmvc.controllers;
 import com.dungeonmvc.App;
 import com.dungeonmvc.GameManager;
 import com.dungeonmvc.interfaces.Observer;
+import com.dungeonmvc.models.Arma;
 import com.dungeonmvc.models.Enemigo;
 import com.dungeonmvc.models.Player;
 
@@ -39,8 +40,8 @@ public class PlayerViewController implements Observer{
         player = GameManager.getInstance().getPlayer();
         player.suscribe(this);
         portrait.setImage(new Image(App.class.getResource("images/"+player.getPortrait()+".png").toExternalForm(),portrait.getFitWidth(),portrait.getFitHeight(),true,false));
-        leftWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getLeftHand()+".png").toExternalForm(),leftWeaponImg.getFitWidth(),leftWeaponImg.getFitHeight(),true,false));
-        rightWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getRightHand()+".png").toExternalForm(),rightWeaponImg.getFitWidth(),rightWeaponImg.getFitHeight(),true,false));
+        leftWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getLeftHand().getImagen()+".png").toExternalForm(),leftWeaponImg.getFitWidth(),leftWeaponImg.getFitHeight(),true,false));
+        rightWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getRightHand().getImagen()+".png").toExternalForm(),rightWeaponImg.getFitWidth(),rightWeaponImg.getFitHeight(),true,false));
         
         enemigo = GameManager.getInstance().getEnemigo();
         enemigo.suscribe(this);
@@ -53,9 +54,10 @@ public class PlayerViewController implements Observer{
     public void onChange() {
         Player player = GameManager.getInstance().getPlayer();
         nameTag.setText(player.getName());
-        nameTag.setText(enemigo.getName());
+
         //Actualiza el texto salud de la etiqueta en la interfaz grafica
         currentHealthTag.setText("Salud: " + player.getPuntosVida());
+
         //leftWeapongImg.setImage(new Image(App.class.getResource("images/"+player.getLeftHand()+".png").toExternalForm()));
         //rightWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getRightHand()+".png").toExternalForm()));
     }

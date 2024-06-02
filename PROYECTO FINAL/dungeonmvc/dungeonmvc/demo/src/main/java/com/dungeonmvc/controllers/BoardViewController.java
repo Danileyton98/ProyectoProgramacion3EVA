@@ -6,7 +6,9 @@ import com.dungeonmvc.App;
 import com.dungeonmvc.GameManager;
 import com.dungeonmvc.interfaces.Observer;
 import com.dungeonmvc.models.Board;
+import com.dungeonmvc.models.Enemigo;
 import com.dungeonmvc.models.Personaje;
+import com.dungeonmvc.models.Player;
 import com.dungeonmvc.utils.Vector2;
 import com.dungeonmvc.utils.Vector2Double;
 
@@ -33,14 +35,16 @@ public class BoardViewController implements Observer{
     HashMap<Personaje,ImageView> cargarImagen = new HashMap<>();
 
     @FXML
-    private void initialize() {
+    public void initialize() {
         System.out.println("Board controller loaded");
         board = GameManager.getInstance().getBoard();
-        
         board.suscribe(this);
     }
 
     public void setUp(){
+        if(board == null){
+            System.out.println("Board is not initialized");
+        }
         int cellNumber = board.getSize();
         cellSize=boardSize/cellNumber;
         System.out.println(cellSize);
@@ -48,6 +52,7 @@ public class BoardViewController implements Observer{
             grid.addRow(i);
             grid.addColumn(i);
         }
+        
 
         for (int row = 0; row < cellNumber; row++) {
             for (int col = 0; col < cellNumber; col++) {
@@ -108,5 +113,12 @@ public class BoardViewController implements Observer{
 
     public void setBoardSize(double boardSize){
         this.boardSize=boardSize;
+    }
+
+    public void eliminarImagen(Enemigo enemigo){
+        ImageView imageView = cargarImagen.get(enemigo);
+        cargarImagen.remove(enemigo);
+        //pane.getChildren().remove(imageView);
+        onChange();
     }
 }
