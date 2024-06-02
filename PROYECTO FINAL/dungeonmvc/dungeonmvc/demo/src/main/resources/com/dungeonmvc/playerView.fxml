@@ -29,8 +29,8 @@
             <HBox layoutX="81.0" AnchorPane.leftAnchor="81.0">
                <children>
                   <Label fx:id="currentHealthTag" text="actual" />
-                  <Label text="/" />
-                  <Label fx:id="maxHealthTag" text="maxima" />
+                  <Label text="" />
+                  <Label fx:id="maxHealthTag" text="" />
                </children>
             </HBox>
          </children>

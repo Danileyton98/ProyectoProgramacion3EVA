@@ -121,7 +121,7 @@ public class Enemigo extends Personaje implements Interactuable {
         int moveY = Integer.compare(objetivoY, posEnemigoY);
 
         /*
-         * Por ultimo se suma la variable x con la variable moveX y la variable y con la
+         * Por ultimo se suma la variable x con la variable moveX y la variable "y" con la
          * variable moveY para obtener las nuevas coordenadas
          * hacia el jugador
          */
@@ -313,8 +313,6 @@ public class Enemigo extends Personaje implements Interactuable {
             }
 
             habPlayer = random.nextInt(player.getRightHand().getHabilidades().size());
-            System.out.println("Dado " + contador);
-            System.out.println("Largo habilidades de player: " + player.getRightHand().getHabilidades().size());
             habilidadPlayer = player.getRightHand().getHabilidades().get(habPlayer);
             resistenciaEnemigo = this.getResistencias().get(habilidadPlayer);
             if (resistenciaEnemigo != null) {
@@ -448,7 +446,6 @@ public class Enemigo extends Personaje implements Interactuable {
                 System.out.println("Neutral");
                 porcentajeDano = totalDados + apuntar;
                 totalDano = porcentajeDano;
-                System.out.println("TOTAL DAÑO PLAYER: " + totalDano);
                 if (totalDano > player.getDefensa()) {
                     diferenciaDano = totalDano - player.getDefensa();
                     player.setPuntosVida(player.getPuntosVida() - diferenciaDano);
@@ -564,8 +561,6 @@ public class Enemigo extends Personaje implements Interactuable {
             }
 
             int habPlayer = random.nextInt(player.getLeftHand().getHabilidades().size());
-            System.out.println("Dado " + contador);
-            System.out.println("Largo habilidades de player: " + player.getLeftHand().getHabilidades().size());
             Habilidades habilidadPlayer = player.getLeftHand().getHabilidades().get(habPlayer);
             Resistencias resistenciaEnemigo = this.getResistencias().get(habilidadPlayer);
             if (resistenciaEnemigo != null) {
@@ -648,8 +643,6 @@ public class Enemigo extends Personaje implements Interactuable {
             }
 
             habPlayer = random.nextInt(player.getRightHand().getHabilidades().size());
-            System.out.println("Dado " + contador);
-            System.out.println("Largo habilidades de player: " + player.getRightHand().getHabilidades().size());
             habilidadPlayer = player.getRightHand().getHabilidades().get(habPlayer);
             resistenciaEnemigo = this.getResistencias().get(habilidadPlayer);
             if (resistenciaEnemigo != null) {
@@ -706,11 +699,11 @@ public class Enemigo extends Personaje implements Interactuable {
                 }
 
             }
-            System.out.println("Puntos de vida: " + this.getPuntosVida());
+            System.out.println("SALUD ENEMIGO: " + this.getPuntosVida());
         }
 
         if (this.getPuntosVida() <= 0) {
-            boardViewController.eliminarImagen(this);
+            //boardViewController.eliminarImagen(this);
             board.eliminarEnemigo(this);
             System.out.println("ENEMIGO ELIMINADO");
         }

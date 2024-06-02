@@ -18,7 +18,7 @@ public class Player extends Personaje implements Interactuable{
     boolean eliminado = false;
     DiceRoll ataque;
     Enemigo enemigo;
-
+    Objetos objeto;
 
 
     public Player(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board, HashMap<Habilidades, Resistencias> resistencias, Arma leftHand, Arma rightHand, Enemigo enemigo) {
@@ -99,14 +99,14 @@ public class Player extends Personaje implements Interactuable{
                 //Volvemos a convertir en interactuable la celda en la que se encuentra el jugador pasando this como argumento 
                 board.getCell(destino).setInteractuable(this);
             }else{
-                enemigosAdyacentes();
+                ObjetosAdyacentes();
             }
         }
         //Llamamos al metodo notifyObservers de la clase board
         board.notifyObservers();
     }
 
-    public void enemigosAdyacentes(){
+    public void ObjetosAdyacentes(){
         //Guardamos en la variable direccion las diferentes direcciones que el player podría tomar
         Vector2[] direccion = {
             new Vector2(0,1), new Vector2(1,0),
@@ -123,10 +123,15 @@ public class Player extends Personaje implements Interactuable{
                 //instancia de enemigo, si es asi, el siguiente metodo(interactuar) iniciaria el ataque entre ambos
                 Cell celdaAdyacente = board.getCell(posAdyacente);
                 if(celdaAdyacente.ocupada() && celdaAdyacente.getInteractuable() instanceof Enemigo){
+                    System.out.println("Es un enemigo");
                     //Convierte el objeto interactuable en enemigo si el objeto de la celda adyacente es instancia de enemigo
                     enemigo = (Enemigo) celdaAdyacente.getInteractuable();
                     //Le pasamos this al metodo interactuar de la clase enemigo para saber quien esta iniciando la interaccion
                     enemigo.interactuar(this);
+                }else if(celdaAdyacente.ocupada() && celdaAdyacente.getInteractuable() instanceof Objetos){
+                    System.out.println("Es un objeto");
+                    objeto = (Objetos) celdaAdyacente.getInteractuable();
+                    objeto.interactuar(this);
                 }
             }
         }

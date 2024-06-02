@@ -56,7 +56,9 @@ public class PlayerViewController implements Observer{
         nameTag.setText(player.getName());
 
         //Actualiza el texto salud de la etiqueta en la interfaz grafica
-        currentHealthTag.setText("Salud: " + player.getPuntosVida());
+        currentHealthTag.setText("" + player.getPuntosVida());
+        strenghtTag.setText("" + player.getFuerza());
+        defenseTag.setText("" + player.getDefensa());
 
         //leftWeapongImg.setImage(new Image(App.class.getResource("images/"+player.getLeftHand()+".png").toExternalForm()));
         //rightWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getRightHand()+".png").toExternalForm()));

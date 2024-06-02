@@ -22,11 +22,13 @@ public class GameManager {
     HashMap<Habilidades,Resistencias> resistenciaPlayer = new HashMap<>();
     HashMap<Habilidades,Resistencias> resistenciaEnemigo1 = new HashMap<>();
     ArrayList<Personaje> monigotes = new ArrayList<>();
+    ArrayList<Objetos> potenciadores = new ArrayList<>();
     private static GameManager instance;
     Enemigo enemigo;
     Player player;
     Board board;
     BoardViewController boardViewController;
+    Objetos objeto;
     
     private GameManager(){
         this.boardViewController = new BoardViewController();
@@ -34,6 +36,10 @@ public class GameManager {
 
     public ArrayList<Personaje> getMonigotes(){
         return monigotes;
+    }
+
+    public ArrayList<Objetos> getPotenciadores(){
+        return potenciadores;
     }
 
     public static GameManager getInstance() {
@@ -53,6 +59,10 @@ public class GameManager {
 
     public Board getBoard() {
         return this.board;
+    }
+
+    public Objetos getObjetos(){
+        return objeto;
     }
 
     //Llamamos a los metodos move de jugador y move de enemigo recorriendo el arraylist de los personajes y haciendo un casteo de la variable
@@ -98,6 +108,17 @@ public class GameManager {
             }
         }
 
+        Objetos objeto1;
+        Objetos objeto2;
+        potenciadores.add(objeto1 = new Objetos("cofre","Vida extra", 12, 5, new Vector2(13, 11), 1, 5,board, boardViewController));
+        potenciadores.add(objeto2 = new Objetos("cofre","Fuerza extra", 15, 8, new Vector2(0, 10), 1, 8,board, boardViewController));
+        //Colocamos los objetos en las celdas correspondientes, para que asi detecte el jugador que hay un objeto interactivo y que no se
+        //solape con el objeto
+        board.getCell(objeto1.getPosition()).setInteractuable(objeto1);
+        board.getCell(objeto2.getPosition()).setInteractuable(objeto2);
+        
+        
+
         habilidadEnemigo1.add(Habilidades.PERFORANTE);
         habilidadEnemigo1.add(Habilidades.MAGIA);
         resistenciaEnemigo1.put(Habilidades.CORTANTE,Resistencias.VULNERABLE);
@@ -136,6 +157,10 @@ public class GameManager {
 
         for(int i = 0; i < monigotes.size(); i++){
             monigotes.get(i);
+        }
+
+        for(int i = 0; i < potenciadores.size(); i++){
+            potenciadores.get(i);
         }
         
     }   

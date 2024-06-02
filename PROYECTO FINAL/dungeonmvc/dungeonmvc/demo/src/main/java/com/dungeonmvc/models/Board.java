@@ -18,6 +18,7 @@ public class Board{
     private String wallImage;
     private String cofre;
     private Enemigo enemigo;
+    
 
     public Board(int size, String floorImage, String wallImage) {
         this.size = size;
@@ -115,6 +116,10 @@ public class Board{
 
     public void eliminarEnemigo(Enemigo enemigo){
         GameManager.getInstance().getMonigotes().remove(enemigo);
+    }
+
+    public void eliminarCofre(Objetos objeto){
+        GameManager.getInstance().getPotenciadores().remove(objeto);
     }
 
     public Vector2 getDestination(Vector2 position, Direction direction){

@@ -7,6 +7,7 @@ import com.dungeonmvc.GameManager;
 import com.dungeonmvc.interfaces.Observer;
 import com.dungeonmvc.models.Board;
 import com.dungeonmvc.models.Enemigo;
+import com.dungeonmvc.models.Objetos;
 import com.dungeonmvc.models.Personaje;
 import com.dungeonmvc.models.Player;
 import com.dungeonmvc.utils.Vector2;
@@ -31,8 +32,10 @@ public class BoardViewController implements Observer{
     private ImageView playerImg;
     private ImageView enemigoImg;
     private ImageView personajeImg;
+    private ImageView potenciadorImg;
     
-    HashMap<Personaje,ImageView> cargarImagen = new HashMap<>();
+    HashMap<Personaje,ImageView> cargarImagenPersonaje = new HashMap<>();
+    HashMap<Objetos,ImageView> cargarImagenCofre = new HashMap<>();
 
     @FXML
     public void initialize() {
@@ -78,7 +81,17 @@ public class BoardViewController implements Observer{
             personajeImg.setImage(new Image(App.class.getResource("images/"+personaje.getImage()+".png").toExternalForm(),cellSize,cellSize,true,false));
             personajeImg.setSmooth(false);
             pane.getChildren().add(personajeImg);
-            cargarImagen.put(personaje, personajeImg);
+            cargarImagenPersonaje.put(personaje, personajeImg);
+        }
+
+        for(Objetos objeto : GameManager.getInstance().getPotenciadores()){
+            potenciadorImg = new ImageView();
+            potenciadorImg.setFitWidth(cellSize);
+            potenciadorImg.setFitHeight(cellSize);
+            potenciadorImg.setImage(new Image(App.class.getResource("images/"+objeto.getImagen()+".png").toExternalForm(),cellSize,cellSize,true,false));
+            potenciadorImg.setSmooth(false);
+            pane.getChildren().add(potenciadorImg);
+            cargarImagenCofre.put(objeto, potenciadorImg);
         }
         
         onChange();
@@ -89,15 +102,22 @@ public class BoardViewController implements Observer{
     public void onChange() {
 
         for(Personaje personaje : GameManager.getInstance().getMonigotes()){
-            ImageView imageView = cargarImagen.get(personaje);
+            ImageView imageView = cargarImagenPersonaje.get(personaje);
 
             if(imageView != null){
                 Vector2Double newPos = matrixToInterface(personaje.getPosition());
-                System.out.println(newPos);
+                //System.out.println(newPos);
                 imageView.setLayoutX(newPos.getX());
                 imageView.setLayoutY(newPos.getY());
             }
             
+        }
+
+        for(Objetos objeto : GameManager.getInstance().getPotenciadores()){
+            ImageView imageView = cargarImagenCofre.get(objeto);
+            Vector2Double pos = matrixToInterface(objeto.getPosition());
+            imageView.setLayoutX(pos.getX());
+            imageView.setLayoutY(pos.getY());
         }
     }
 
@@ -116,9 +136,18 @@ public class BoardViewController implements Observer{
     }
 
     public void eliminarImagen(Enemigo enemigo){
-        ImageView imageView = cargarImagen.get(enemigo);
-        cargarImagen.remove(enemigo);
-        //pane.getChildren().remove(imageView);
+        ImageView imageView = cargarImagenPersonaje.get(enemigo);
+        pane.getChildren().remove(imageView);
+        cargarImagenPersonaje.remove(enemigo);
+        
+        onChange();
+    }
+{}
+    public void eliminarImagenCofre(Objetos objeto){
+        ImageView imageView = cargarImagenCofre.get(objeto);
+        pane.getChildren().remove(imageView);
+        cargarImagenCofre.remove(objeto);
+        
         onChange();
     }
 }
