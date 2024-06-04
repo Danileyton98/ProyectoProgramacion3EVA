@@ -193,7 +193,7 @@ public class Enemigo extends Personaje implements Interactuable {
         
         int posPlayer = GameManager.getInstance().getMonigotes().indexOf(player);
         int posEnemigo = GameManager.getInstance().getMonigotes().indexOf(this);
-        
+
         if (posPlayer > posEnemigo) {
 
             // ################# ATACA PLAYER CON LA MANO IZQUIERDA ################
@@ -712,7 +712,7 @@ public class Enemigo extends Personaje implements Interactuable {
             System.out.println("SALUD ENEMIGO: " + this.getPuntosVida());
         }
 
-        //Si la salud del enemigo llega a 0 o menos, entraria en el if y supuestamente llamaria al metodo eliminarImagen y a eliminarEnemigo
+        //Si la salud del enemigo llega a 0 o menos, entraria en el if y supuestamente llamaria al metodo eliminarImagen y eliminarEnemigo
         if (this.getPuntosVida() <= 0) {
             if(boardViewController != null){
                 boardViewController.eliminarImagen(this);

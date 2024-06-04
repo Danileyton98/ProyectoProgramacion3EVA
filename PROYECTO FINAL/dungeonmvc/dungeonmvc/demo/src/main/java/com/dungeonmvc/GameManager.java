@@ -3,6 +3,7 @@ package com.dungeonmvc;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Random;
 
 import com.dungeonmvc.controllers.BoardViewController;
 import com.dungeonmvc.models.*;
@@ -12,7 +13,7 @@ import com.dungeonmvc.utils.DiceRoll.Dice;
 
 
 public class GameManager {
-    
+    ArrayList<boolean[][]> mapas = new ArrayList<>();
     ArrayList<Habilidades> habilidadEnemigo1 = new ArrayList<>();
     ArrayList<Habilidades> habilidadArmaPlayerRight = new ArrayList<>();
     ArrayList<Habilidades> habilidadArmaPlayerLeft = new ArrayList<>();
@@ -27,6 +28,7 @@ public class GameManager {
     Board board;
     BoardViewController boardViewController;
     Objetos objeto;
+    boolean[][] mapa;
     
     
     private GameManager(){
@@ -94,9 +96,8 @@ public class GameManager {
 
     public void testGame(){
 
-        
-
-        boolean boardMatrix[][] = {
+        //Agregamos mapas a la lista
+        mapas.add(mapa = new boolean[][] {
             {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
             {true, false, false, false, true, false, false, false, false, false, false, false, false, false, true},
             {true, false, true, false, true, false, true, true, true, true, true, true, false, true, true},
@@ -112,18 +113,41 @@ public class GameManager {
             {true, false, false, false, true, false, false, false, false, false, false, false, false, false, true},
             {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
             {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true}
-        };
+        });
 
-        board = new Board(boardMatrix.length,"floor","wall");
-        for (int i = 0; i < boardMatrix.length; i++) {
-            for (int j=0;j < boardMatrix[0].length;j++){
-                board.newCell(new Vector2(i, j), boardMatrix[i][j]);
+        mapas.add(mapa = new boolean[][]{
+            {true, true, true, true, true, true, true, true, true, true, true, false, true, true, true},
+            {true, false, false, false, false, false, true, false, false, false, false, false, false, false, true},
+            {true, false, true, true, true, false, true, false, true, true, true, true, true, true, true},
+            {true, false, true, false, false, false, false, false, false, false, false, false, false, false, true},
+            {true, false, true, false, true, true, true, true, true, true, false, true, true, true, true},
+            {true, false, false, false, false, false, false, false, false, false, false, false, false, false, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, false, false, false, false, false, false, false, false, false, false, true, false, false, true},
+            {true, false, true, true, true, true, true, true, true, true, true, false, true, false, true},
+            {true, false, false, false, false, false, false, false, false, false, false, false, false, false, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true},
+            {true, false, false, false, false, false, false, false, false, false, false, false, false, false, true},
+            {true, false, true, true, true, true, true, true, true, true, false, true, false, true, true},
+            {true, false, false, false, false, false, false, false, false, true, false, false, true, false, true},
+            {true, true, true, true, true, true, true, true, true, true, true, true, true, true, true}
+            });
+
+
+        Random random = new Random();
+        //Guardamos un numero al azar entre el largo de la lista, asi tendramos mapas al azar
+        int numMapa = random.nextInt(mapas.size());
+
+        board = new Board(mapas.get(numMapa).length,"floor","wall");
+        for (int i = 0; i < mapas.get(numMapa).length; i++) {
+            for (int j=0;j < mapas.get(numMapa)[0].length;j++){
+                board.newCell(new Vector2(i, j), mapas.get(numMapa)[i][j]);
             }
         }
 
         Objetos objeto1;
         Objetos objeto2;
-        potenciadores.add(objeto1 = new Objetos("cofre","Vida extra", 12, 5, new Vector2(13, 11), 1, 5,board, boardViewController));
+        potenciadores.add(objeto1 = new Objetos("cofre","Vida extra", 12, 5, new Vector2(13, 12), 1, 5,board, boardViewController));
         potenciadores.add(objeto2 = new Objetos("cofre","Fuerza extra", 15, 8, new Vector2(0, 10), 1, 8,board, boardViewController));
         //Colocamos los objetos en las celdas correspondientes, para que asi detecte el jugador que hay un objeto interactivo y que no se
         //solape con el objeto
@@ -161,8 +185,8 @@ public class GameManager {
         
         monigotes.add(player);
         //monigotes.add(enemigoFantasma = new EnemigoFantasma(new Vector2(6, 4), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
-        monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
-        monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","Bellatrix", 35, 30, 29, 45, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3, boardViewController,habilidadEnemigo1));
+        monigotes.add(enemigo = new Enemigo(new Vector2(0, 6), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
+        monigotes.add(enemigo = new Enemigo(new Vector2(6, 9), "enemigo","Bellatrix", 35, 30, 29, 45, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3, boardViewController,habilidadEnemigo1));
 
         //Con esta función nos ahorramos el algoritmo de ordenación, esto hara que se ordene mediante el atributo velocidad ya que
         //en la clase personaje hemos implementado Comparable y sobrecargado el metodo compareTo que define la lógica de comparación
