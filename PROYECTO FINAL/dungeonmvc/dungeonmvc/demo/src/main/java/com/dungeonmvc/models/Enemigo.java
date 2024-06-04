@@ -191,8 +191,10 @@ public class Enemigo extends Personaje implements Interactuable {
         //Guardamos la cantidad de dados que tiene el enemigo
         int cantDadosEnemigo = this.getDiceQuantity();
         
-
-        if (player.getVelocidad() > this.getVelocidad()) {
+        int posPlayer = GameManager.getInstance().getMonigotes().indexOf(player);
+        int posEnemigo = GameManager.getInstance().getMonigotes().indexOf(this);
+        
+        if (posPlayer > posEnemigo) {
 
             // ################# ATACA PLAYER CON LA MANO IZQUIERDA ################
             // Guardamos en la variable dadoPlayer el numero de caras que tiene el dado del

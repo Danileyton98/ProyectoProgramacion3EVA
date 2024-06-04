@@ -150,7 +150,7 @@ public class GameManager {
         Arma leftHand = new Arma("item7", "Espadon del caballero Lobo", 2, Dice.d6, habilidadArmaPlayerLeft);
         Arma rightHand = new Arma("item6", "Estoque llameante", 1, Dice.d4, habilidadArmaPlayerRight);
 
-        player = new Player(new Vector2(0, 0),"player", "Paladin",60,25,30,47,"portrait", board,resistenciaPlayer, leftHand, rightHand, enemigo);
+        player = new Player(new Vector2(0, 0),"player", "Paladin",60,25,30,54,"portrait", board,resistenciaPlayer, leftHand, rightHand, enemigo);
         player.getInventory().addItem("item1");
         player.getInventory().addItem("item2");
         player.getInventory().addItem("item3");
@@ -162,7 +162,7 @@ public class GameManager {
         monigotes.add(player);
         //monigotes.add(enemigoFantasma = new EnemigoFantasma(new Vector2(6, 4), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
         monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
-        monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","Bellatrix", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3, boardViewController,habilidadEnemigo1));
+        monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","Bellatrix", 35, 30, 29, 45, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3, boardViewController,habilidadEnemigo1));
 
         //Con esta función nos ahorramos el algoritmo de ordenación, esto hara que se ordene mediante el atributo velocidad ya que
         //en la clase personaje hemos implementado Comparable y sobrecargado el metodo compareTo que define la lógica de comparación
