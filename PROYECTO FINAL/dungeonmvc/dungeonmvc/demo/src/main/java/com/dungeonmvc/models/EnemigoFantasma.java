@@ -1,4 +1,5 @@
 package com.dungeonmvc.models;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -13,8 +14,7 @@ import com.dungeonmvc.utils.Vector2;
 
 import javafx.application.Platform;
 
-public class Enemigo extends Personaje implements Interactuable {
-
+public class EnemigoFantasma extends Personaje implements Interactuable {
     int percepcion;
     ArrayList<Observer> observers;
     Player player;
@@ -23,7 +23,7 @@ public class Enemigo extends Personaje implements Interactuable {
     int diceQuantity;
     Dice damage;
 
-    public Enemigo(Vector2 position, String image, String name, int puntosVida, int fuerza, int defensa, int velocidad,
+    public EnemigoFantasma(Vector2 position, String image, String name, int puntosVida, int fuerza, int defensa, int velocidad,
         String portrait, Board board, HashMap<Habilidades, Resistencias> resistencias, int diceQuantity,
         Dice damage, int percepcion, BoardViewController boardViewController, ArrayList<Habilidades> habilidades) {
         super(position, image, name, puntosVida, fuerza, defensa, velocidad, portrait, board, resistencias);
@@ -51,10 +51,6 @@ public class Enemigo extends Personaje implements Interactuable {
         observers.remove(observer);
     }
 
-    public BoardViewController getBoardViewController(){
-        return boardViewController;
-    }
-
     public void setBoardViewController(BoardViewController boardViewController) {
         this.boardViewController = boardViewController;
     }
@@ -71,12 +67,9 @@ public class Enemigo extends Personaje implements Interactuable {
         return damage;
     }
 
-    
     public Vector2 randomEnemigo() {
         Random random = new Random();
         int pos;
-        //Saca un numero al azar (0-3) y lo guarda en la variable pos, depende del numero que saque,
-        //el enemigo se movera a una casilla u otra
         pos = random.nextInt(4);
         int destinoX = position.getX();
         int destinoY = position.getY();
@@ -135,7 +128,7 @@ public class Enemigo extends Personaje implements Interactuable {
         return new Vector2(posEnemigoX + moveX, posEnemigoY + moveY);
     }
 
-    public void moveEnemigo(Direction direction) {
+    public void moveEnemigoFantasma(Direction direction) {
         Vector2 destino = randomEnemigo();
         // Almacenamos la posicion del jugador en la variable positionPlayer
         Vector2 positionPlayer = GameManager.getInstance().getPlayer().getPosition();
@@ -156,7 +149,7 @@ public class Enemigo extends Personaje implements Interactuable {
         // en la misma casilla
         if (destino.getX() >= 0 && destino.getX() < board.getSize()
                 && destino.getY() >= 0 && destino.getY() < board.getSize()) {
-            if (board.isFloor(destino) && !board.getCell(destino).ocupada()) {
+            if (!board.getCell(destino).ocupada()) {
                 // Liberamos la celda en la que estaba el enemigo poniendo como argumento null
                 board.getCell(this.position).setInteractuable(null);
                 // Se establece la nueva posicion
@@ -174,6 +167,7 @@ public class Enemigo extends Personaje implements Interactuable {
     public void interactuar(Interactuable interactuable) {
 
         Player player = (Player) interactuable;
+
         Random random = new Random();
         int numCaras = 0;
         int contador = 0;
@@ -184,13 +178,9 @@ public class Enemigo extends Personaje implements Interactuable {
         int diferenciaDano;
         int totalDados = 0;
         int dado;
-        //Guardamos la cantidad de dados que tiene arma del player en la mano izquierda
         int cantDadosLeft = player.getLeftHand().getDiceQuantity();
-        //Guardamos la cantidad de dados que tiene arma del player en la mano derecha
         int cantDadosRight = player.getRightHand().getDiceQuantity();
-        //Guardamos la cantidad de dados que tiene el enemigo
         int cantDadosEnemigo = this.getDiceQuantity();
-        
 
         if (player.getVelocidad() > this.getVelocidad()) {
 
@@ -710,18 +700,12 @@ public class Enemigo extends Personaje implements Interactuable {
             System.out.println("SALUD ENEMIGO: " + this.getPuntosVida());
         }
 
-        //Si la salud del enemigo llega a 0 o menos, entraria en el if y supuestamente llamaria al metodo eliminarImagen y a eliminarEnemigo
         if (this.getPuntosVida() <= 0) {
-            if(boardViewController != null){
-                boardViewController.eliminarImagen(this);
-            }else{
-                System.out.println("boardViewController is null");
-            }
-            board.eliminarEnemigo(this);
+            //boardViewController.eliminarImagen(this);
+            board.eliminarEnemigoFantasma(null);
             System.out.println("ENEMIGO ELIMINADO");
         }
 
-        //Si la salud del player llega a 0 o menos, el juego se cerraria
         if (player.getPuntosVida() <= 0) {
             Platform.exit();
             System.out.println("ELIMINADO");

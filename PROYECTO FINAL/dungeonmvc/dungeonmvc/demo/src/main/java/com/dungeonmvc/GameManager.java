@@ -1,7 +1,6 @@
 package com.dungeonmvc;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.HashMap;
 
@@ -10,8 +9,6 @@ import com.dungeonmvc.models.*;
 import com.dungeonmvc.models.Board.Direction;
 import com.dungeonmvc.utils.Vector2;
 import com.dungeonmvc.utils.DiceRoll.Dice;
-
-import javafx.scene.layout.Pane;
 
 
 public class GameManager {
@@ -25,14 +22,17 @@ public class GameManager {
     ArrayList<Objetos> potenciadores = new ArrayList<>();
     private static GameManager instance;
     Enemigo enemigo;
+    EnemigoFantasma enemigoFantasma;
     Player player;
     Board board;
     BoardViewController boardViewController;
     Objetos objeto;
     
+    
     private GameManager(){
-        this.boardViewController = new BoardViewController();
+        
     }
+
 
     public ArrayList<Personaje> getMonigotes(){
         return monigotes;
@@ -47,6 +47,14 @@ public class GameManager {
             instance = new GameManager();
         }
         return instance;
+    }
+
+    public BoardViewController getBoardViewController(){
+        return this.boardViewController;
+    }
+
+    public void setBoardViewController(BoardViewController boardViewController){
+        this.boardViewController = boardViewController;
     }
 
     public Enemigo getEnemigo(){
@@ -65,6 +73,10 @@ public class GameManager {
         return objeto;
     }
 
+    public EnemigoFantasma getEnemigoFantasma(){
+        return enemigoFantasma;
+    }
+
     //Llamamos a los metodos move de jugador y move de enemigo recorriendo el arraylist de los personajes y haciendo un casteo de la variable
     //personaje para convertir el objeto tipo personaje en enemigo
     public void newTurn(Direction direction){
@@ -72,8 +84,9 @@ public class GameManager {
             for(Personaje personaje : monigotes){
                 if(personaje instanceof Enemigo){
                     ((Enemigo)personaje).moveEnemigo(direction);
-                }
-                
+                }/*else if(personaje instanceof EnemigoFantasma){
+                    ((EnemigoFantasma)personaje).moveEnemigoFantasma(direction);
+                }*/
             }
     }
     
@@ -145,8 +158,9 @@ public class GameManager {
         player.getInventory().addItem("item5");
 
         
-
+        
         monigotes.add(player);
+        //monigotes.add(enemigoFantasma = new EnemigoFantasma(new Vector2(6, 4), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
         monigotes.add(enemigo = new Enemigo(new Vector2(4, 4), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
         monigotes.add(enemigo = new Enemigo(new Vector2(7, 9), "enemigo","Bellatrix", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3, boardViewController,habilidadEnemigo1));
 

@@ -32,7 +32,8 @@ public class Cell {
         this.interactuable = interactuable;
     }
 
-    //Retorna true en el caso que this.interactuable fuese distinto a null, ya que habría un objeto en la casilla, de lo contrario retornaria false
+    //Retorna true en el caso que interactuable fuese distinto a null, ya que habría un objeto en la casilla,
+    //de lo contrario, retornaria false
     public boolean ocupada(){
         return this.interactuable != null;
     }

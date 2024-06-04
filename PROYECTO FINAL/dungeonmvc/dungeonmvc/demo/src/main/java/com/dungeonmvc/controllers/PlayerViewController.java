@@ -3,7 +3,6 @@ package com.dungeonmvc.controllers;
 import com.dungeonmvc.App;
 import com.dungeonmvc.GameManager;
 import com.dungeonmvc.interfaces.Observer;
-import com.dungeonmvc.models.Arma;
 import com.dungeonmvc.models.Enemigo;
 import com.dungeonmvc.models.Player;
 
@@ -55,13 +54,10 @@ public class PlayerViewController implements Observer{
         Player player = GameManager.getInstance().getPlayer();
         nameTag.setText(player.getName());
 
-        //Actualiza el texto salud de la etiqueta en la interfaz grafica
+        //Actualiza el texto de las etiquetas en la interfaz grafica
         currentHealthTag.setText("" + player.getPuntosVida());
         strenghtTag.setText("" + player.getFuerza());
         defenseTag.setText("" + player.getDefensa());
-
-        //leftWeapongImg.setImage(new Image(App.class.getResource("images/"+player.getLeftHand()+".png").toExternalForm()));
-        //rightWeaponImg.setImage(new Image(App.class.getResource("images/"+player.getRightHand()+".png").toExternalForm()));
     }
 
 

@@ -9,7 +9,6 @@ import com.dungeonmvc.models.Board;
 import com.dungeonmvc.models.Enemigo;
 import com.dungeonmvc.models.Objetos;
 import com.dungeonmvc.models.Personaje;
-import com.dungeonmvc.models.Player;
 import com.dungeonmvc.utils.Vector2;
 import com.dungeonmvc.utils.Vector2Double;
 
@@ -29,8 +28,6 @@ public class BoardViewController implements Observer{
     private double cellSize;
     private double boardSize;
  
-    private ImageView playerImg;
-    private ImageView enemigoImg;
     private ImageView personajeImg;
     private ImageView potenciadorImg;
     
@@ -135,14 +132,17 @@ public class BoardViewController implements Observer{
         this.boardSize=boardSize;
     }
 
+
     public void eliminarImagen(Enemigo enemigo){
+        //Guardamos en imageView la imagen del enemigo pasada por parametro
         ImageView imageView = cargarImagenPersonaje.get(enemigo);
+        //Con el metodo remove, eliminamos la imagen del tablero
         pane.getChildren().remove(imageView);
+        //Eliminamos el enemigo pasado por parametro del HashMap de personajes
         cargarImagenPersonaje.remove(enemigo);
-        
         onChange();
     }
-{}
+
     public void eliminarImagenCofre(Objetos objeto){
         ImageView imageView = cargarImagenCofre.get(objeto);
         pane.getChildren().remove(imageView);

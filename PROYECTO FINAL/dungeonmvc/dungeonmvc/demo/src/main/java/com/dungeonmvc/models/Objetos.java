@@ -66,13 +66,18 @@ public class Objetos implements Interactuable{
     public void interactuar(Interactuable interactuable){
         
         Random random = new Random();
+        //Guardamos en la variable num un numero al azar del 0 al 2
         int num = random.nextInt(3);
         //Hacemos un cast para convertir el parametreo interactuable en player, esto evitara un error de this.player is null
         Player player = (Player) interactuable;
 
+        
         if(num == 0){
+            //Guardamos en fuerza, la fuerza pasada por parametro que se le añadira al player 
             int fuerza = this.getFuerza();
+            //Guardamos en fuerza total, el resultado de la fuerza del personaje mas la añadida
             int fuerzaTotal = player.getFuerza() + fuerza;
+            //Modificamos la fuerza del personaje con el valor de la variable fuerzaTotal
             player.setFuerza(fuerzaTotal);
             System.out.println("FUERZA EXTRA!!");
         }else if(num == 1){
@@ -87,11 +92,21 @@ public class Objetos implements Interactuable{
             System.out.println("DEFENSA EXTRA!!");
         }
 
+        //Modificamos la salud del cofre a 0 cuando un jugador haya interactuado, para despues poder eliminar la imagen
         this.setSaludCofre(this.getSaludCofre() - player.getFuerza());
 
+        //Una vez que hayamos interactuado con el cofre, la salud se pondra a 0 y llamara al metodo eliminarCofre, eeste
+        //eliminara el objeto del array list
+        //Tambien llamara al metodo eliminarImagenCofre para eliminar la imagen del tablero
         if(this.saludCofre <= 0){
+            if(boardViewController != null){
+                boardViewController.eliminarImagenCofre(this);
+            }else{
+                System.out.println("boardViewController is null");
+            }
             board.eliminarCofre(this);
-            //boardViewController.eliminarImagenCofre(this);
+            System.out.println("COFRE ABIERTO");
+            
         }
 
         board.notifyObservers();

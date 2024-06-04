@@ -18,6 +18,7 @@ public class Board{
     private String wallImage;
     private String cofre;
     private Enemigo enemigo;
+    private EnemigoFantasma enemigoFantasma;
     
 
     public Board(int size, String floorImage, String wallImage) {
@@ -26,6 +27,7 @@ public class Board{
         this.floorImage = floorImage;
         this.wallImage = wallImage;
         this.enemigo = GameManager.getInstance().getEnemigo();
+        this.enemigoFantasma = GameManager.getInstance().getEnemigoFantasma();
         observers=new ArrayList<>();
 
     }
@@ -102,22 +104,25 @@ public class Board{
         this.enemigo = enemigo;
     }
 
+    public EnemigoFantasma getEnemigoFantasma(){
+        return enemigoFantasma;
+    }
+
     public void newCell(Vector2 position, boolean isFloor){
         Cell cell = new Cell(isFloor);
         board[position.getX()][position.getY()] = cell;
     }
 
-    
-    public void movePlayer(Direction direction){
-        GameManager.getInstance().getPlayer().move(direction);
-        enemigo.moveEnemigo(direction);
-        notifyObservers();
-    }
-
+    //Elimina el objeto Personaje pasado por parametro, en este caso el enemigo
     public void eliminarEnemigo(Enemigo enemigo){
         GameManager.getInstance().getMonigotes().remove(enemigo);
     }
 
+    public void eliminarEnemigoFantasma(EnemigoFantasma enemigo){
+        GameManager.getInstance().getMonigotes().remove(enemigo);
+    }
+
+    //Elimina el objeto de la lista potenciadores pasado por parametro
     public void eliminarCofre(Objetos objeto){
         GameManager.getInstance().getPotenciadores().remove(objeto);
     }
