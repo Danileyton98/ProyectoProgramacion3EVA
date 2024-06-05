@@ -8,6 +8,7 @@ import com.dungeonmvc.GameManager;
 import com.dungeonmvc.interfaces.Observer;
 import com.dungeonmvc.models.Board;
 import com.dungeonmvc.models.Enemigo;
+import com.dungeonmvc.models.EnemigoCobarde;
 import com.dungeonmvc.models.Objetos;
 import com.dungeonmvc.models.Personaje;
 import com.dungeonmvc.utils.Vector2;
@@ -118,6 +119,14 @@ public class BoardViewController implements Observer{
                     
                 }
                 
+                if(personaje instanceof EnemigoCobarde && personaje.getPuntosVida()<=0){
+                    eliminarImagenEnemCobarde((EnemigoCobarde)personaje);
+                    board.getCell(personaje.getPosition()).setInteractuable(null);
+                    board.eliminarEnemigoCobare((EnemigoCobarde) personaje);
+                    
+                }
+
+                
             }
     
     
@@ -165,6 +174,15 @@ public class BoardViewController implements Observer{
         pane.getChildren().remove(imageView);
         //Eliminamos al enemigo del HashMap de personajes
         cargarImagenPersonaje.remove(enemigo);
+    }
+
+    public void eliminarImagenEnemCobarde(EnemigoCobarde enemigoCobarde){
+        //Guardamos en imageView la imagen del enemigoCobarde pasada por parametro
+        ImageView imageView = cargarImagenPersonaje.get(enemigoCobarde);
+        //Con el metodo remove, eliminamos la imagen del tablero
+        pane.getChildren().remove(imageView);
+        //Eliminamos al enemigo del HashMap de personajes
+        cargarImagenPersonaje.remove(enemigoCobarde);
     }
 
     public void eliminarImagenCofre(Objetos objeto){

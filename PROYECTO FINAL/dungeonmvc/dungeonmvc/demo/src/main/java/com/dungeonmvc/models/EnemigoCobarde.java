@@ -14,7 +14,7 @@ import com.dungeonmvc.utils.Vector2;
 
 import javafx.application.Platform;
 
-public class EnemigoFantasma extends Personaje implements Interactuable {
+public class EnemigoCobarde extends Personaje implements Interactuable {
     int percepcion;
     ArrayList<Observer> observers;
     Player player;
@@ -23,7 +23,7 @@ public class EnemigoFantasma extends Personaje implements Interactuable {
     int diceQuantity;
     Dice damage;
 
-    public EnemigoFantasma(Vector2 position, String image, String name, int puntosVida, int fuerza, int defensa, int velocidad,
+    public EnemigoCobarde(Vector2 position, String image, String name, int puntosVida, int fuerza, int defensa, int velocidad,
         String portrait, Board board, HashMap<Habilidades, Resistencias> resistencias, int diceQuantity,
         Dice damage, int percepcion, BoardViewController boardViewController, ArrayList<Habilidades> habilidades) {
         super(position, image, name, puntosVida, fuerza, defensa, velocidad, portrait, board, resistencias);
@@ -125,7 +125,7 @@ public class EnemigoFantasma extends Personaje implements Interactuable {
          */
         // Por lo tanto si moveX es positivo, significaría que el player estaria a la
         // derecha del enemigo y se sumaria a la coordenada moveX
-        return new Vector2(posEnemigoX + moveX, posEnemigoY + moveY);
+        return new Vector2(posEnemigoX - moveX, posEnemigoY - moveY);
     }
 
     public void moveEnemigoFantasma(Direction direction) {
@@ -149,7 +149,7 @@ public class EnemigoFantasma extends Personaje implements Interactuable {
         // en la misma casilla
         if (destino.getX() >= 0 && destino.getX() < board.getSize()
                 && destino.getY() >= 0 && destino.getY() < board.getSize()) {
-            if (!board.getCell(destino).ocupada()) {
+            if (board.isFloor(destino) && !board.getCell(destino).ocupada()) {
                 // Liberamos la celda en la que estaba el enemigo poniendo como argumento null
                 board.getCell(this.position).setInteractuable(null);
                 // Se establece la nueva posicion

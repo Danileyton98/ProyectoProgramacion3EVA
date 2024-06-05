@@ -19,6 +19,7 @@ public class Player extends Personaje implements Interactuable{
     DiceRoll ataque;
     Enemigo enemigo;
     Objetos objeto;
+    EnemigoCobarde enemigoCobarde;
 
 
     public Player(Vector2 position,String image, String name, int puntosVida, int fuerza, int defensa, int velocidad, String portrait, Board board, HashMap<Habilidades, Resistencias> resistencias, Arma leftHand, Arma rightHand, Enemigo enemigo) {
@@ -128,7 +129,14 @@ public class Player extends Personaje implements Interactuable{
                     enemigo = (Enemigo) celdaAdyacente.getInteractuable();
                     //Le pasamos this al metodo interactuar de la clase enemigo para saber quien esta iniciando la interaccion
                     enemigo.interactuar(this);
-                }else if(celdaAdyacente.ocupada() && celdaAdyacente.getInteractuable() instanceof Objetos){
+                }else if(celdaAdyacente.getInteractuable() instanceof EnemigoCobarde){
+                    System.out.println("Es un enemigo cobarde");
+                    //Convierte el objeto interactuable en enemigoCobarde si el objeto de la celda adyacente es instancia de enemigoCobarde
+                    enemigoCobarde = (EnemigoCobarde) celdaAdyacente.getInteractuable();
+                    //Le pasamos this al metodo interactuar de la clase enemigoCobarde para saber quien esta iniciando la interaccion
+                    enemigoCobarde.interactuar(this);
+                }
+                else if(celdaAdyacente.ocupada() && celdaAdyacente.getInteractuable() instanceof Objetos){
                     System.out.println("Es un objeto");
                     objeto = (Objetos) celdaAdyacente.getInteractuable();
                     objeto.interactuar(this);

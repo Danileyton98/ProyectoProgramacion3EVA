@@ -18,7 +18,7 @@ public class Board{
     private String wallImage;
     private String cofre;
     private Enemigo enemigo;
-    private EnemigoFantasma enemigoFantasma;
+    private EnemigoCobarde enemigoFantasma;
     
 
     public Board(int size, String floorImage, String wallImage) {
@@ -27,7 +27,7 @@ public class Board{
         this.floorImage = floorImage;
         this.wallImage = wallImage;
         this.enemigo = GameManager.getInstance().getEnemigo();
-        this.enemigoFantasma = GameManager.getInstance().getEnemigoFantasma();
+        this.enemigoFantasma = GameManager.getInstance().getEnemigoCobarde();
         observers=new ArrayList<>();
 
     }
@@ -104,7 +104,7 @@ public class Board{
         this.enemigo = enemigo;
     }
 
-    public EnemigoFantasma getEnemigoFantasma(){
+    public EnemigoCobarde getEnemigoFantasma(){
         return enemigoFantasma;
     }
 
@@ -118,7 +118,11 @@ public class Board{
         GameManager.getInstance().getMonigotes().remove(enemigo);
     }
 
-    public void eliminarEnemigoFantasma(EnemigoFantasma enemigo){
+    public void eliminarEnemigoCobare(EnemigoCobarde enemigoCobarde){
+        GameManager.getInstance().getMonigotes().remove(enemigoCobarde);
+    }
+
+    public void eliminarEnemigoFantasma(EnemigoCobarde enemigo){
         GameManager.getInstance().getMonigotes().remove(enemigo);
     }
 

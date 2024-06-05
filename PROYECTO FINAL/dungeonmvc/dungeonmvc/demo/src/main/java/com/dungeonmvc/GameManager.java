@@ -23,7 +23,7 @@ public class GameManager {
     ArrayList<Objetos> potenciadores = new ArrayList<>();
     private static GameManager instance;
     Enemigo enemigo;
-    EnemigoFantasma enemigoFantasma;
+    EnemigoCobarde enemigoCobarde;
     Player player;
     Board board;
     BoardViewController boardViewController;
@@ -75,8 +75,8 @@ public class GameManager {
         return objeto;
     }
 
-    public EnemigoFantasma getEnemigoFantasma(){
-        return enemigoFantasma;
+    public EnemigoCobarde getEnemigoCobarde(){
+        return enemigoCobarde;
     }
 
     //Llamamos a los metodos move de jugador y move de enemigo recorriendo el arraylist de los personajes y haciendo un casteo de la variable
@@ -86,9 +86,9 @@ public class GameManager {
             for(Personaje personaje : monigotes){
                 if(personaje instanceof Enemigo){
                     ((Enemigo)personaje).moveEnemigo(direction);
-                }/*else if(personaje instanceof EnemigoFantasma){
-                    ((EnemigoFantasma)personaje).moveEnemigoFantasma(direction);
-                }*/
+                }else if(personaje instanceof EnemigoCobarde){
+                    ((EnemigoCobarde)personaje).moveEnemigoFantasma(direction);
+                }
             }
     }
     
@@ -184,7 +184,7 @@ public class GameManager {
         
         
         monigotes.add(player);
-        //monigotes.add(enemigoFantasma = new EnemigoFantasma(new Vector2(6, 4), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
+        monigotes.add(enemigoCobarde = new EnemigoCobarde(new Vector2(6, 4), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
         monigotes.add(enemigo = new Enemigo(new Vector2(0, 6), "enemigo","Voldemort", 35, 30, 29, 34, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3,boardViewController,habilidadEnemigo1));
         monigotes.add(enemigo = new Enemigo(new Vector2(6, 9), "enemigo","Bellatrix", 35, 30, 29, 45, "portrait", board,resistenciaEnemigo1,1,Dice.d6,3, boardViewController,habilidadEnemigo1));
 
