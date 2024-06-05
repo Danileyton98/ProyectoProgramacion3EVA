@@ -712,17 +712,6 @@ public class Enemigo extends Personaje implements Interactuable {
             System.out.println("SALUD ENEMIGO: " + this.getPuntosVida());
         }
 
-        //Si la salud del enemigo llega a 0 o menos, entraria en el if y supuestamente llamaria al metodo eliminarImagen y eliminarEnemigo
-        if (this.getPuntosVida() <= 0) {
-            if(boardViewController != null){
-                boardViewController.eliminarImagen(this);
-            }else{
-                System.out.println("boardViewController is null");
-            }
-            board.eliminarEnemigo(this);
-            System.out.println("ENEMIGO ELIMINADO");
-        }
-
         //Si la salud del player llega a 0 o menos, el juego se cerraria
         if (player.getPuntosVida() <= 0) {
             Platform.exit();

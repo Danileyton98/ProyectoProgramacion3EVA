@@ -95,21 +95,6 @@ public class Objetos implements Interactuable{
         //Modificamos la salud del cofre a 0 cuando un jugador haya interactuado, para despues poder eliminar la imagen
         this.setSaludCofre(this.getSaludCofre() - player.getFuerza());
 
-        //Una vez que hayamos interactuado con el cofre, la salud se pondra a 0 y llamara al metodo eliminarCofre, eeste
-        //eliminara el objeto del array list
-        //Tambien llamara al metodo eliminarImagenCofre para eliminar la imagen del tablero
-        if(this.saludCofre <= 0){
-            if(boardViewController != null){
-                boardViewController.eliminarImagenCofre(this);
-            }else{
-                System.out.println("boardViewController is null");
-            }
-            board.eliminarCofre(this);
-            System.out.println("COFRE ABIERTO");
-            
-        }
-
-        board.notifyObservers();
         player.notifyObservers();
     }
 

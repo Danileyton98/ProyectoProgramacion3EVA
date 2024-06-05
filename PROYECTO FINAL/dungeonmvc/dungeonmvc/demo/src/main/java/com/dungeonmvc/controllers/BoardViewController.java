@@ -1,5 +1,6 @@
 package com.dungeonmvc.controllers;
 
+import java.util.ConcurrentModificationException;
 import java.util.HashMap;
 
 import com.dungeonmvc.App;
@@ -98,25 +99,49 @@ public class BoardViewController implements Observer{
     @Override
     public void onChange() {
 
-        for(Personaje personaje : GameManager.getInstance().getMonigotes()){
-            ImageView imageView = cargarImagenPersonaje.get(personaje);
-
-            if(imageView != null){
-                Vector2Double newPos = matrixToInterface(personaje.getPosition());
-                //System.out.println(newPos);
-                imageView.setLayoutX(newPos.getX());
-                imageView.setLayoutY(newPos.getY());
+        try{
+            for(Personaje personaje : GameManager.getInstance().getMonigotes()){
+                ImageView imageView = cargarImagenPersonaje.get(personaje);
+    
+                if(imageView != null){
+                    Vector2Double newPos = matrixToInterface(personaje.getPosition());
+                    //System.out.println(newPos);
+                    imageView.setLayoutX(newPos.getX());
+                    imageView.setLayoutY(newPos.getY());
+                }
+    
+                //Si la salud del enemigo llega a 0 o menos, entraria en el if y supuestamente llamaria al metodo eliminarImagen y eliminarEnemigo
+                if(personaje instanceof Enemigo && personaje.getPuntosVida()<=0){
+                    eliminarImagen((Enemigo) personaje);
+                    board.getCell(personaje.getPosition()).setInteractuable(null);
+                    board.eliminarEnemigo((Enemigo) personaje);
+                    
+                }
+                
             }
-            
+    
+    
+            for(Objetos objeto : GameManager.getInstance().getPotenciadores()){
+                ImageView imageView = cargarImagenCofre.get(objeto);
+                Vector2Double pos = matrixToInterface(objeto.getPosition());
+                imageView.setLayoutX(pos.getX());
+                imageView.setLayoutY(pos.getY());
+    
+                //Una vez que hayamos interactuado con el cofre, la salud se pondra a 0 y llamara al metodo eliminarCofre, eeste
+                //eliminara el objeto del array list
+                //Tambien llamara al metodo eliminarImagenCofre para eliminar la imagen del tablero
+                if(objeto instanceof Objetos && objeto.getSaludCofre() <= 0){
+                    eliminarImagenCofre((Objetos) objeto);
+                    board.getCell(objeto.getPosition()).setInteractuable(null);
+                    board.eliminarCofre((Objetos)objeto);
+                }
+        }
+        }catch(ConcurrentModificationException e){
+            System.out.println("SIUU!!");
         }
 
-        for(Objetos objeto : GameManager.getInstance().getPotenciadores()){
-            ImageView imageView = cargarImagenCofre.get(objeto);
-            Vector2Double pos = matrixToInterface(objeto.getPosition());
-            imageView.setLayoutX(pos.getX());
-            imageView.setLayoutY(pos.getY());
-        }
-    }
+        
+}
 
     @Override
     public void onChange(String... args) {
@@ -138,16 +163,13 @@ public class BoardViewController implements Observer{
         ImageView imageView = cargarImagenPersonaje.get(enemigo);
         //Con el metodo remove, eliminamos la imagen del tablero
         pane.getChildren().remove(imageView);
-        //Eliminamos el enemigo pasado por parametro del HashMap de personajes
+        //Eliminamos al enemigo del HashMap de personajes
         cargarImagenPersonaje.remove(enemigo);
-        onChange();
     }
 
     public void eliminarImagenCofre(Objetos objeto){
         ImageView imageView = cargarImagenCofre.get(objeto);
         pane.getChildren().remove(imageView);
         cargarImagenCofre.remove(objeto);
-        
-        onChange();
     }
 }
