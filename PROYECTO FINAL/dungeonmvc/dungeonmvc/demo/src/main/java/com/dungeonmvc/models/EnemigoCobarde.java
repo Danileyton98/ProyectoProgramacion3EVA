@@ -97,7 +97,7 @@ public class EnemigoCobarde extends Personaje implements Interactuable {
     }
 
     // Calcula la posicion del jugador con la del enemigo para mover al enemigo a
-    // una nueva coordenada persiguiendo al jugador
+    // una nueva coordenada huyendo del jugador
     public Vector2 directionEnemigo(Vector2 objetivo) {
         // Almacenamos en las variables x,y la posicion del enemigo
         int posEnemigoX = position.getX();
@@ -119,12 +119,12 @@ public class EnemigoCobarde extends Personaje implements Interactuable {
         int moveY = Integer.compare(objetivoY, posEnemigoY);
 
         /*
-         * Por ultimo se suma la variable x con la variable moveX y la variable "y" con la
+         * Por ultimo se resta la variable x con la variable moveX y la variable "y" con la
          * variable moveY para obtener las nuevas coordenadas
-         * hacia el jugador
+         * huyendo del jugador
          */
         // Por lo tanto si moveX es positivo, significaría que el player estaria a la
-        // derecha del enemigo y se sumaria a la coordenada moveX
+        // derecha del enemigo y se restaria a la coordenada moveX
         return new Vector2(posEnemigoX - moveX, posEnemigoY - moveY);
     }
 
